@@ -120,7 +120,7 @@
             text-align: center;
             padding: 20px;
             width: 100%;
-            flex-shrink: 0; /* Ensures the footer doesn't shrink when content is long */
+            flex-shrink: 0;
         }
 
         .main-content {
@@ -288,19 +288,32 @@
                 btn.textContent = "Hide Solution";
             }
         }
-
+        
+        // This is the correct and complete load function.
         async function loadComponent(url, elementId) {
             try {
                 const response = await fetch(url);
-                if (!response.ok) throw new Error(`Failed to load ${url}: ${response.status}`);
+                if (!response.ok) {
+                    throw new Error(`Failed to load ${url}: ${response.status}`);
+                }
                 const html = await response.text();
                 document.getElementById(elementId).innerHTML = html;
+
+                // Set the title only after the header is loaded
+                if (elementId === 'header-placeholder') {
+                    const titleElement = document.getElementById('section-title');
+                    if (titleElement) {
+                        // **This is the line you will change for each page**
+                        titleElement.textContent = 'Section 1.0 – Introduction to AP Calculus'; 
+                    }
+                }
+                
             } catch (err) {
                 console.error(err);
                 document.getElementById(elementId).innerHTML = `<p style="color:red;">Error loading component: ${url}</p>`;
             }
         }
-
+        
         // Fetch header, sidebar, and footer
         loadComponent('textbookheader.html', 'header-placeholder');
         loadComponent('textbooksidebar.html', 'sidebar-placeholder');
