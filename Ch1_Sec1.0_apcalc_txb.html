@@ -301,11 +301,10 @@
 
                 // Set the title only after the header is loaded
                 if (elementId === 'header-placeholder') {
-                    // Look for the h1 element inside the header
-                    const headerElement = document.querySelector('#header-placeholder header h1');
-                    if (headerElement) {
-                        // Set the section title in the header
-                        headerElement.textContent = 'Section 1.0 – Introduction to AP Calculus'; 
+                    const titleElement = document.getElementById('The Idea of a Limit');
+                    if (titleElement) {
+                        // **This is the line you will change for each page**
+                        titleElement.textContent = 'Section 1.0 – Introduction to AP Calculus'; 
                     }
                 }
                 
