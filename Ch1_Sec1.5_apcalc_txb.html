@@ -7,11 +7,8 @@
   <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
   <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
   <style>
-    /* Global box-sizing for all elements */
-    * {
-      box-sizing: border-box;
-    }
-    
+    * { box-sizing: border-box; }
+
     body {
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
       margin: 0;
@@ -22,39 +19,20 @@
       flex-direction: column;
       min-height: 100vh;
     }
-    
-    /* Styles for dynamically loaded components */
-    #header-placeholder, #footer-placeholder {
-      width: 100%;
-    }
 
-    /* Main page layout */
-    .page-container {
-      display: flex;
-      flex-grow: 1;
-    }
-    
+    #header-placeholder, #footer-placeholder { width: 100%; }
+    .page-container { display: flex; flex-grow: 1; }
     .sidebar {
       width: 250px;
       background: #00274d;
       color: white;
       padding: 20px;
-      box-sizing: border-box;
       flex-shrink: 0;
       overflow-y: auto;
       max-height: 100vh;
     }
-    
-    .sidebar h3 {
-      color: white;
-      margin-top: 0;
-    }
-    
-    .sidebar ul {
-      list-style-type: none;
-      padding: 0;
-    }
-    
+    .sidebar h3 { color: white; margin-top: 0; }
+    .sidebar ul { list-style-type: none; padding: 0; }
     .sidebar ul li a {
       display: block;
       padding: 10px;
@@ -62,18 +40,9 @@
       text-decoration: none;
       border-bottom: 1px solid #0056b3;
     }
-    
-    .sidebar ul li a:hover {
-      background: #0056b3;
-      color: white;
-    }
-    
-    .sidebar ul li a.active {
-      background: #0056b3;
-      color: white;
-      font-weight: bold;
-    }
-    
+    .sidebar ul li a:hover { background: #0056b3; color: white; }
+    .sidebar ul li a.active { background: #0056b3; color: white; font-weight: bold; }
+
     header {
       background: #00274d;
       color: white;
@@ -83,265 +52,159 @@
       align-items: center;
       justify-content: space-between;
     }
-    
-    header img {
-      height: 50px;
-      flex-shrink: 0;
-    }
-    
-    header h1 {
-      margin: 0;
-      font-size: 1.8em;
-      color: white;
-      text-align: center;
-      flex-grow: 1;
-      flex-shrink: 1;
-      min-width: 0;
-      padding: 0 10px;
-    }
-    
-    header a.home-link {
-      color: white;
-      text-decoration: none;
-      font-size: 1em;
-      background: #0056b3;
-      padding: 6px 12px;
-      border-radius: 6px;
-      flex-shrink: 0;
-    }
-    
-    header a.home-link:hover {
-      background: #0073e6;
-    }
-    
-    .footer {
-      background: #00274d;
-      color: white;
-      text-align: center;
-      padding: 20px;
-      width: 100%;
-      flex-shrink: 0; /* Ensures the footer doesn't shrink when content is long */
+    header img { height: 50px; flex-shrink: 0; }
+    header h1 { margin: 0; font-size: 1.8em; color: white; text-align: center; flex-grow: 1; flex-shrink: 1; min-width: 0; padding: 0 10px; }
+    header a.home-link { color: white; text-decoration: none; font-size: 1em; background: #0056b3; padding: 6px 12px; border-radius: 6px; flex-shrink: 0; }
+    header a.home-link:hover { background: #0073e6; }
+
+    .footer { background: #00274d; color: white; text-align: center; padding: 20px; width: 100%; flex-shrink: 0; }
+    .main-content { flex-grow: 1; }
+    .container { padding: 20px; max-width: 900px; margin: auto; }
+
+    h2 { color: #0056b3; border-bottom: 2px solid #0056b3; padding-bottom: 5px; }
+    h3 { color: #0056b3; }
+    .nav-buttons { display: flex; justify-content: space-between; margin: 30px auto; }
+    .nav-btn { background: #0056b3; color: white; padding: 12px 25px; border-radius: 8px; text-decoration: none; font-size: 1.1em; }
+    .nav-btn:hover { background: #0073e6; }
+    .example, .tip, .check { background: #f0f8ff; border-left: 5px solid #0056b3; padding: 10px; margin: 15px 0; border-radius: 8px; }
+    .check p { font-size: 1.2em; }
+    .solution { display: none; background: #e6f2ff; border: 1px solid #0056b3; padding: 10px; margin-top: 10px; border-radius: 6px; }
+    .show-solution-btn { background: #0056b3; color: white; border: none; padding: 8px 15px; border-radius: 6px; cursor: pointer; margin-top: 10px; }
+    .show-solution-btn:hover { background: #0073e6; }
+
+    /* Scale Q4 image to fit screen */
+    .check img {
+      max-width: 100%;
+      height: auto;
+      display: block;
+      margin: 15px auto;
+      max-height: 300px;
     }
 
-    .main-content {
-      flex-grow: 1;
-    }
-    
-    .container {
-      padding: 20px;
-      max-width: 900px;
-      margin: auto;
-      margin-top: 0;
-    }
-    
-    h2 {
-      color: #0056b3;
-      border-bottom: 2px solid #0056b3;
-      padding-bottom: 5px;
-    }
-    
-    h3 {
-      color: #0056b3;
-    }
-    
-    .nav-buttons {
-      display: flex;
-      justify-content: space-between;
-      margin: 30px auto;
-    }
-    
-    .nav-btn {
-      background: #0056b3;
-      color: white;
-      padding: 12px 25px;
-      border-radius: 8px;
-      text-decoration: none;
-      font-size: 1.1em;
-    }
-    
-    .nav-btn:hover {
-      background: #0073e6;
-    }
-    
-    .example, .tip, .check {
-      background: #f0f8ff;
-      border-left: 5px solid #0056b3;
-      padding: 10px;
-      margin: 15px 0;
-      border-radius: 8px;
-    }
-    
-    .check p {
-      font-size: 1.2em;
-    }
-    
-    .solution {
-      display: none;
-      background: #e6f2ff;
-      border: 1px solid #0056b3;
-      padding: 10px;
-      margin-top: 10px;
-      border-radius: 6px;
-    }
-    
-    .show-solution-btn {
-      background: #0056b3;
-      color: white;
-      border: none;
-      padding: 8px 15px;
-      border-radius: 6px;
-      cursor: pointer;
-      margin-top: 10px;
-    }
-    
-    .show-solution-btn:hover {
-      background: #0073e6;
-    }
-
-    /* Responsive design for tablets and mobile devices */
     @media (max-width: 768px) {
-      .page-container {
-        flex-direction: column;
-      }
-      .sidebar {
-        width: 100%;
-        max-height: none;
-        order: -1; /* Puts the sidebar at the top on small screens */
-      }
+      .page-container { flex-direction: column; }
+      .sidebar { width: 100%; max-height: none; order: -1; }
     }
   </style>
 </head>
 <body>
   <div id="header-placeholder"></div>
-
   <div class="page-container">
     <div id="sidebar-placeholder"></div>
-
     <div class="main-content">
       <div class="container">
         <h2>Classwork Questions</h2>
         <p>This classwork covers limits from sections 1.1 to 1.4. Solve each problem and then click the button to check your solution!</p>
 
+        <!-- Question 1 -->
         <div class="check">
           <p><strong>Question 1:</strong> Find the limit by factoring.</p>
           \[ \lim_{x \to 3} \frac{x^2 - 9}{x - 3} \]
           <button class="show-solution-btn" onclick="toggleSolution(this)">Show Solution</button>
           <div class="solution">
-            <p>Factor the numerator and simplify:</p>
-            \[ \lim_{x \to 3} \frac{(x - 3)(x + 3)}{x - 3} = \lim_{x \to 3} (x + 3) \]
-            <p>Substitute \(x = 3\):</p>
-            \[ 3 + 3 = 6 \]
+            \[ \lim_{x \to 3} \frac{(x - 3)(x + 3)}{x - 3} = \lim_{x \to 3} (x + 3) = 6 \]
           </div>
         </div>
-    
+
+        <!-- Question 2 -->
         <div class="check">
           <p><strong>Question 2:</strong> Find the limit at infinity.</p>
           \[ \lim_{x \to \infty} \frac{2x^3 - 5x + 1}{4x^3 + 7x^2} \]
           <button class="show-solution-btn" onclick="toggleSolution(this)">Show Solution</button>
           <div class="solution">
-            <p>The degrees of the numerator and denominator are equal (both are 3). The limit is the ratio of the leading coefficients.</p>
-            \[ \frac{2}{4} = \frac{1}{2} \]
+            Limit is ratio of leading coefficients: \[ \frac{2}{4} = \frac{1}{2} \]
           </div>
         </div>
-    
+
+        <!-- Question 3 -->
         <div class="check">
           <p><strong>Question 3:</strong> Find the limit of the trigonometric function.</p>
-          \[ \lim_{x \to 0} \frac{\sin(4x)}{x} \]
+          \[ \lim_{x \to 0} \frac{\sin(4x)}{x} = 4 \]
           <button class="show-solution-btn" onclick="toggleSolution(this)">Show Solution</button>
           <div class="solution">
-            <p>Multiply the numerator and denominator by 4 to match the argument of the sine function.</p>
-            \[ \lim_{x \to 0} \frac{4\sin(4x)}{4x} = 4 \lim_{x \to 0} \frac{\sin(4x)}{4x} \]
-            <p>Using the special trigonometric limit rule, this becomes:</p>
-            \[ 4 \cdot 1 = 4 \]
+            \[ \lim_{x \to 0} \frac{4 \sin(4x)}{4x} = 4 \]
           </div>
         </div>
-    
+
+        <!-- Question 4 -->
         <div class="check">
           <p><strong>Question 4:</strong> Find the limit from the graph. Does the limit exist?</p>
-          <img src="limit_graph.png" alt="Graph of a function with a jump discontinuity at x equals 2">
-          \[ \lim_{x \to 2} f(x) \]
+          <img src="limit_graph.png" alt="Graph for Question 4">
           <button class="show-solution-btn" onclick="toggleSolution(this)">Show Solution</button>
           <div class="solution">
-            <p>Evaluate the one-sided limits:</p>
             \[ \lim_{x \to 2^-} f(x) = 3 \]
             \[ \lim_{x \to 2^+} f(x) = 1 \]
-            <p>Since the left-hand limit and the right-hand limit are not equal, the overall limit does not exist (DNE).</p>
+            <p>Left and right-hand limits are not equal → limit DNE.</p>
           </div>
         </div>
-    
+
+        <!-- Question 5 -->
         <div class="check">
           <p><strong>Question 5:</strong> Find the limit by factoring.</p>
-          \[ \lim_{x \to 5} \frac{x^2 - 25}{x - 5} \]
+          \[ \lim_{x \to 5} \frac{x^2 - 25}{x - 5} = 10 \]
           <button class="show-solution-btn" onclick="toggleSolution(this)">Show Solution</button>
           <div class="solution">
-            <p>Factor the numerator using the difference of squares formula:</p>
-            \[ \lim_{x \to 5} \frac{(x-5)(x+5)}{x-5} \]
-            <p>Cancel out the common term \((x-5)\) and substitute \(x = 5\):</p>
-            \[ \lim_{x \to 5} (x + 5) = 5 + 5 = 10 \]
+            \[ \lim_{x \to 5} \frac{(x-5)(x+5)}{x-5} = \lim_{x \to 5} (x+5) = 10 \]
           </div>
         </div>
-    
+
+        <!-- Question 6 -->
         <div class="check">
           <p><strong>Question 6:</strong> Find the limit at infinity. What is the horizontal asymptote?</p>
-          \[ \lim_{x \to \infty} \frac{5x + 3}{x^2 + 2x} \]
+          \[ \lim_{x \to \infty} \frac{5x + 3}{x^2 + 2x} = 0 \]
           <button class="show-solution-btn" onclick="toggleSolution(this)">Show Solution</button>
           <div class="solution">
-            <p>The degree of the numerator (1) is less than the degree of the denominator (2). The limit is 0, which means there is a horizontal asymptote at \(y = 0\).</p>
+            Degree numerator < degree denominator → horizontal asymptote y = 0
           </div>
         </div>
-    
+
+        <!-- Question 7 -->
         <div class="check">
           <p><strong>Question 7:</strong> Find the one-sided limit.</p>
-          \[ \lim_{x \to 5^+} \frac{x + 5}{x - 5} \]
+          \[ \lim_{x \to 5^+} \frac{x+5}{x-5} = +\infty \]
           <button class="show-solution-btn" onclick="toggleSolution(this)">Show Solution</button>
           <div class="solution">
-            <p>As \(x \to 5^+\), the numerator approaches a positive value (10), while the denominator approaches 0 from the positive side (e.g., \(5.1 - 5 = 0.1\)). Therefore, the limit is positive infinity.</p>
-            \[ \lim_{x \to 5^+} \frac{\text{positive}}{\text{small positive}} = +\infty \]
+            As \(x \to 5^+\), numerator → 10, denominator → 0^+ → limit = +∞
           </div>
         </div>
-    
+
+        <!-- Question 8 -->
         <div class="check">
           <p><strong>Question 8:</strong> Find the limit of the trigonometric function.</p>
-          \[ \lim_{x \to 0} \frac{1 - \cos(5x)}{x^2} \]
+          \[ \lim_{x \to 0} \frac{1 - \cos(5x)}{x^2} = \frac{25}{2} \]
           <button class="show-solution-btn" onclick="toggleSolution(this)">Show Solution</button>
           <div class="solution">
-            <p>We can use the double-angle identity: \(1 - \cos(2\theta) = 2\sin^2(\theta)\). Here, \(2\theta = 5x\), so \(\theta = \frac{5x}{2}\).</p>
-            \[ \lim_{x \to 0} \frac{2\sin^2(\frac{5x}{2})}{x^2} \]
-            <p>Multiply to get the proper denominator for the special limit rule:</p>
-            \[ 2 \lim_{x \to 0} \left( \frac{\sin(\frac{5x}{2})}{x} \right)^2 \cdot \frac{(\frac{5}{2})^2}{(\frac{5}{2})^2} = 2 \lim_{x \to 0} \left( \frac{5}{2} \cdot \frac{\sin(\frac{5x}{2})}{\frac{5x}{2}} \right)^2 \]
-            <p>Using Rule 1, this simplifies to:</p>
-            \[ 2 \left( \frac{5}{2} \cdot 1 \right)^2 = 2 \cdot \frac{25}{4} = \frac{25}{2} \]
+            Using double-angle identity: \[ \lim_{x \to 0} \frac{1 - \cos(5x)}{x^2} = \frac{25}{2} \]
           </div>
         </div>
-    
+
+        <!-- Question 9 -->
         <div class="check">
-          <p><strong>Question 9:</strong> Find the limit at infinity. Does the horizontal asymptote exist?</p>
-          \[ \lim_{x \to -\infty} \frac{x^4 - 2x}{x^2 + 1} \]
+          <p><strong>Question 9:</strong> Find the limit at infinity. Does horizontal asymptote exist?</p>
+          \[ \lim_{x \to -\infty} \frac{x^4 - 2x}{x^2 + 1} = +\infty \]
           <button class="show-solution-btn" onclick="toggleSolution(this)">Show Solution</button>
           <div class="solution">
-            <p>The degree of the numerator (4) is greater than the degree of the denominator (2). The limit is \(\infty\) or \(-\infty\).</p>
-            <p>As \(x \to -\infty\), the leading term in the numerator \(x^4\) is positive, and the leading term in the denominator \(x^2\) is positive. The limit is \(+\infty\), and a horizontal asymptote does not exist.</p>
+            Degree numerator > degree denominator → limit = +∞ → no horizontal asymptote
           </div>
         </div>
-    
+
+        <!-- Question 10 -->
         <div class="check">
           <p><strong>Question 10:</strong> Find the limit.</p>
-          \[ \lim_{x \to 2} (x^2 + 5x - 6) \]
+          \[ \lim_{x \to 2} (x^2 + 5x - 6) = 8 \]
           <button class="show-solution-btn" onclick="toggleSolution(this)">Show Solution</button>
           <div class="solution">
-            <p>This is a polynomial function, so we can find the limit by direct substitution.</p>
-            \[ (2)^2 + 5(2) - 6 = 4 + 10 - 6 = 8 \]
+            Direct substitution: \(2^2 + 5(2) - 6 = 8\)
           </div>
         </div>
-    
+
         <div class="nav-buttons">
-          <a href="Ch1_Sec1.4_apcalc_txb.html" class="nav-btn">Back ⬅</a>
-          <a href="Ch1_Sec1.6_apcalc_txb.html" class="nav-btn">Next ➡</a>
+          <a href="Ch1_Sec1.4.html" class="nav-btn">Previous Section</a>
+          <a href="Ch1_Sec1.6.html" class="nav-btn">Next Section</a>
         </div>
       </div>
     </div>
   </div>
-
   <div id="footer-placeholder"></div>
 
   <script>
@@ -356,36 +219,21 @@
       }
     }
 
-    async function loadComponent(url, elementId, pageTitle = null) {
+    async function loadComponent(url, elementId) {
       try {
         const response = await fetch(url);
         if (!response.ok) throw new Error(`Failed to load ${url}: ${response.status}`);
         const html = await response.text();
-        const container = document.getElementById(elementId);
-        if (!container) return;
-        container.innerHTML = html;
-
-        // Update document title if requested
-        if (pageTitle && elementId === 'header-placeholder') {
-          // Look for the h1 element inside the loaded header
-          const headerH1 = container.querySelector('header h1');
-          if (headerH1) {
-            headerH1.textContent = pageTitle;
-          }
-          document.title = pageTitle;
-        }
+        document.getElementById(elementId).innerHTML = html;
       } catch (err) {
         console.error(err);
-        const el = document.getElementById(elementId);
-        if (el) el.innerHTML = `<p style="color:red;">Error loading component: ${url}</p>`;
+        document.getElementById(elementId).innerHTML = `<p style="color:red;">Error loading component: ${url}</p>`;
       }
     }
 
-    document.addEventListener('DOMContentLoaded', () => {
-      loadComponent('textbookheader.html', 'header-placeholder', 'Section 1.5 – Classwork');
-      loadComponent('textbooksidebar.html', 'sidebar-placeholder');
-      loadComponent('textbookfooter.html', 'footer-placeholder');
-    });
+    loadComponent('textbookheader.html', 'header-placeholder');
+    loadComponent('textbooksidebar.html', 'sidebar-placeholder');
+    loadComponent('textbookfooter.html', 'footer-placeholder');
   </script>
 </body>
 </html>
