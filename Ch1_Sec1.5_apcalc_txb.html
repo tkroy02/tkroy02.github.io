@@ -199,8 +199,8 @@
         </div>
 
         <div class="nav-buttons">
-          <a href="Ch1_Sec1.4_apcalc_txb_html.html" class="nav-btn">Previous Section</a>
-          <a href="Ch1_Sec1.6_apcalc_txb_html" class="nav-btn">Next Section</a>
+          <a href="Ch1_Sec1.4_apcalc_txb.html" class="nav-btn">Previous Section</a>
+          <a href="Ch1_Sec1.6_apcalc_txb.html" class="nav-btn">Next Section</a>
         </div>
       </div>
     </div>
@@ -220,32 +220,32 @@
     }
 
     // This is the correct and complete load function.
-        async function loadComponent(url, elementId) {
-            try {
-                const response = await fetch(url);
-                if (!response.ok) {
-                    throw new Error(`Failed to load ${url}: ${response.status}`);
-                }
-                const html = await response.text();
-                document.getElementById(elementId).innerHTML = html;
+     async function loadComponent(url, elementId) {
+    try {
+        const response = await fetch(url);
+        if (!response.ok) {
+            throw new Error(`Failed to load ${url}: ${response.status}`);
+        }
+        const html = await response.text();
+        document.getElementById(elementId).innerHTML = html;
 
-                // Set the title only after the header is loaded
-                if (elementId === 'header-placeholder') {
-    const titleElement = document.getElementById('section-title');
-    if (titleElement) {
-        // Change both the visible header and the browser tab title
-        const pageTitle = 'Section 1.5 – Classwork';
-        titleElement.textContent = pageTitle;
-        document.title = pageTitle;
-    }
+        // Set the title only after the header is loaded
+        if (elementId === 'header-placeholder') {
+            const titleElement = document.getElementById('section-title');
+            if (titleElement) {
+                const pageTitle = 'Section 1.5 – Classwork';
+                titleElement.textContent = pageTitle;
+                document.title = pageTitle;
+            }
+        }
 
-        
-      
-      } catch (err) {
+
+    } catch (err) {
         console.error(err);
         document.getElementById(elementId).innerHTML = `<p style="color:red;">Error loading component: ${url}</p>`;
-      }
     }
+}
+   
 
     loadComponent('textbookheader.html', 'header-placeholder');
     loadComponent('textbooksidebar.html', 'sidebar-placeholder');
@@ -253,6 +253,7 @@
   </script>
 </body>
 </html>
+
 
 
 
