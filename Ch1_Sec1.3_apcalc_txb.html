@@ -222,4 +222,41 @@
         solution.style.display = "block";
         button.textContent = "Hide Solution";
       } else {
-        solution.style.display = "none
+        solution.style.display = "none";
+        button.textContent = "Show Solution";
+      }
+    }
+
+    async function loadComponent(url, elementId, pageTitle = null) {
+      try {
+        const response = await fetch(url, { cache: "no-store" });
+        if (!response.ok) throw new Error(`Failed to load ${url}: ${response.status}`);
+        const html = await response.text();
+        const container = document.getElementById(elementId);
+        if (!container) return;
+        container.innerHTML = html;
+
+        // Update document title if requested
+        if (pageTitle && elementId === 'header-placeholder') {
+          // Look for the h1 element inside the loaded header
+          const headerH1 = container.querySelector('header h1');
+          if (headerH1) {
+            headerH1.textContent = pageTitle;
+          }
+          document.title = pageTitle;
+        }
+      } catch (err) {
+        console.error(err);
+        const el = document.getElementById(elementId);
+        if (el) el.innerHTML = `<p style="color:red;">Error loading component: ${url}</p>`;
+      }
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      loadComponent('textbookheader.html', 'header-placeholder', 'Section 1.3 – Limits at Infinity and Horizontal Asymptotes');
+      loadComponent('textbooksidebar.html', 'sidebar-placeholder');
+      loadComponent('textbookfooter.html', 'footer-placeholder');
+    });
+  </script>
+</body>
+</html>
