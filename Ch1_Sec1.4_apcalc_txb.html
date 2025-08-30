@@ -7,207 +7,82 @@
   <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
   <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
   <style>
-    /* Global box-sizing for all elements */
-    * {
-      box-sizing: border-box;
-    }
-    
+    * { box-sizing: border-box; }
     body {
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      margin: 0;
-      line-height: 1.6;
+      margin: 0; line-height: 1.6;
       background: #ffffff;
       color: #00274d;
-      display: flex;
-      flex-direction: column;
+      display: flex; flex-direction: column;
       min-height: 100vh;
     }
-    
-    /* Styles for dynamically loaded components */
-    #header-placeholder, #footer-placeholder {
-      width: 100%;
-    }
+    #header-placeholder, #footer-placeholder { width: 100%; }
 
-    /* Main page layout */
-    .page-container {
-      display: flex;
-      flex-grow: 1;
-    }
-    
+    .page-container { display: flex; flex-grow: 1; }
+
     .sidebar {
-      width: 250px;
-      background: #00274d;
-      color: white;
-      padding: 20px;
-      box-sizing: border-box;
-      flex-shrink: 0;
-      overflow-y: auto;
-      max-height: 100vh;
+      width: 250px; background: #00274d; color: white;
+      padding: 20px; flex-shrink: 0; overflow-y: auto; max-height: 100vh;
     }
-    
-    .sidebar h3 {
-      color: white;
-      margin-top: 0;
-    }
-    
-    .sidebar ul {
-      list-style-type: none;
-      padding: 0;
-    }
-    
+    .sidebar h3 { margin-top: 0; color: white; }
+    .sidebar ul { list-style: none; padding: 0; }
     .sidebar ul li a {
-      display: block;
-      padding: 10px;
-      color: #c0c0c0;
-      text-decoration: none;
-      border-bottom: 1px solid #0056b3;
+      display: block; padding: 10px; color: #c0c0c0;
+      text-decoration: none; border-bottom: 1px solid #0056b3;
     }
-    
-    .sidebar ul li a:hover {
-      background: #0056b3;
-      color: white;
+    .sidebar ul li a:hover, .sidebar ul li a.active {
+      background: #0056b3; color: white; font-weight: bold;
     }
-    
-    .sidebar ul li a.active {
-      background: #0056b3;
-      color: white;
-      font-weight: bold;
-    }
-    
+
     header {
-      background: #00274d;
-      color: white;
-      padding: 20px;
-      width: 100%;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
+      background: #00274d; color: white; padding: 20px;
+      display: flex; align-items: center; justify-content: space-between; width: 100%;
     }
-    
-    header img {
-      height: 50px;
-      flex-shrink: 0;
-    }
-    
-    header h1 {
-      margin: 0;
-      font-size: 1.8em;
-      color: white;
-      text-align: center;
-      flex-grow: 1;
-      flex-shrink: 1;
-      min-width: 0;
-      padding: 0 10px;
-    }
-    
+    header img { height: 50px; flex-shrink: 0; }
+    header h1 { margin: 0; font-size: 1.8em; color: white; text-align: center; flex-grow: 1; padding: 0 10px; min-width: 0; }
     header a.home-link {
-      color: white;
-      text-decoration: none;
-      font-size: 1em;
-      background: #0056b3;
-      padding: 6px 12px;
-      border-radius: 6px;
-      flex-shrink: 0;
+      color: white; text-decoration: none; font-size: 1em;
+      background: #0056b3; padding: 6px 12px; border-radius: 6px; flex-shrink: 0;
     }
-    
-    header a.home-link:hover {
-      background: #0073e6;
-    }
-    
+    header a.home-link:hover { background: #0073e6; }
+
     .footer {
-      background: #00274d;
-      color: white;
-      text-align: center;
-      padding: 20px;
-      width: 100%;
-      flex-shrink: 0; /* Ensures the footer doesn't shrink when content is long */
+      background: #00274d; color: white; text-align: center;
+      padding: 20px; width: 100%; flex-shrink: 0;
     }
 
-    .main-content {
-      flex-grow: 1;
-    }
-    
-    .container {
-      padding: 20px;
-      max-width: 900px;
-      margin: auto;
-      margin-top: 0;
-    }
-    
-    h2 {
-      color: #0056b3;
-      border-bottom: 2px solid #0056b3;
-      padding-bottom: 5px;
-    }
-    
-    h3 {
-      color: #0056b3;
-    }
-    
-    .nav-buttons {
-      display: flex;
-      justify-content: space-between;
-      margin: 30px auto;
-    }
-    
+    .main-content { flex-grow: 1; }
+    .container { padding: 20px; max-width: 900px; margin: auto; margin-top: 0; }
+
+    h2 { color: #0056b3; border-bottom: 2px solid #0056b3; padding-bottom: 5px; }
+    h3 { color: #0056b3; }
+
+    .nav-buttons { display: flex; justify-content: space-between; margin: 30px auto; }
     .nav-btn {
-      background: #0056b3;
-      color: white;
-      padding: 12px 25px;
-      border-radius: 8px;
-      text-decoration: none;
-      font-size: 1.1em;
+      background: #0056b3; color: white; padding: 12px 25px;
+      border-radius: 8px; text-decoration: none; font-size: 1.1em;
     }
-    
-    .nav-btn:hover {
-      background: #0073e6;
-    }
-    
-    .example, .tip, .check {
-      background: #f0f8ff;
-      border-left: 5px solid #0056b3;
-      padding: 10px;
-      margin: 15px 0;
-      border-radius: 8px;
-    }
-    
-    .check p {
-      font-size: 1.2em;
-    }
-    
-    .solution {
-      display: none;
-      background: #e6f2ff;
-      border: 1px solid #0056b3;
-      padding: 10px;
-      margin-top: 10px;
-      border-radius: 6px;
-    }
-    
-    .show-solution-btn {
-      background: #0056b3;
-      color: white;
-      border: none;
-      padding: 8px 15px;
-      border-radius: 6px;
-      cursor: pointer;
-      margin-top: 10px;
-    }
-    
-    .show-solution-btn:hover {
-      background: #0073e6;
-    }
+    .nav-btn:hover { background: #0073e6; }
 
-    /* Responsive design for tablets and mobile devices */
+    .example, .tip, .check {
+      background: #f0f8ff; border-left: 5px solid #0056b3;
+      padding: 10px; margin: 15px 0; border-radius: 8px;
+    }
+    .check p { font-size: 1.2em; }
+
+    .solution {
+      display: none; background: #e6f2ff;
+      border: 1px solid #0056b3; padding: 10px; margin-top: 10px; border-radius: 6px;
+    }
+    .show-solution-btn {
+      background: #0056b3; color: white; border: none;
+      padding: 8px 15px; border-radius: 6px; cursor: pointer; margin-top: 10px;
+    }
+    .show-solution-btn:hover { background: #0073e6; }
+
     @media (max-width: 768px) {
-      .page-container {
-        flex-direction: column;
-      }
-      .sidebar {
-        width: 100%;
-        max-height: none;
-        order: -1; /* Puts the sidebar at the top on small screens */
-      }
+      .page-container { flex-direction: column; }
+      .sidebar { width: 100%; max-height: none; order: -1; }
     }
   </style>
 </head>
@@ -221,84 +96,52 @@
       <div class="container">
         <h2>1. Special Trigonometric Limits</h2>
         <p>To solve many trigonometric limits, you need to know these two fundamental rules.</p>
-         
+
         <h3>Rule 1</h3>
-        <p>This rule is used for sine functions approaching a value of zero.</p>
         <div class="example">
           \[ \lim_{x \to 0} \frac{\sin x}{x} = 1 \]
-          <p>This limit forms the basis for many other problems. It is crucial to remember that the argument inside the sine function <strong>must match</strong> the expression in the denominator.</p>
+          <p>The argument inside sine must match the denominator.</p>
         </div>
-    
+
         <h3>Rule 2</h3>
-        <p>This rule is used for cosine functions approaching a value of zero.</p>
         <div class="example">
           \[ \lim_{x \to 0} \frac{1 - \cos x}{x} = 0 \]
-          <p>Similar to the first rule, the argument of the cosine function must match the expression in the denominator.</p>
         </div>
-    
+
         <h2>2. Using the Special Limits</h2>
-        <p>When solving more complex problems, you often need to manipulate the expression to fit one of the special rules. This usually involves multiplying the numerator and denominator by a constant to match the terms.</p>
-    
         <h3>Example A: Matching the Denominator</h3>
-        <p>Find the value of the limit:</p>
         <div class="example">
-          \[ \lim_{x \to 0} \frac{\sin(2x)}{x} \]
-          <p>We can't use Rule 1 directly because the argument of the sine function is \(2x\), not \(x\). To fix this, we multiply the numerator and the denominator by 2.</p>
-          \[ \lim_{x \to 0} \frac{\sin(2x)}{x} \cdot \frac{2}{2} = \lim_{x \to 0} 2 \cdot \frac{\sin(2x)}{2x} \]
-          <p>By the special limit rule, we know that as a variable approaches zero, the limit of the sine of that variable over itself is 1.</p>
-          \[ 2 \cdot \lim_{x \to 0} \frac{\sin(2x)}{2x} = 2 \cdot 1 = 2 \]
+          \[ \lim_{x \to 0} \frac{\sin(2x)}{x} = 2 \]
         </div>
-    
+
         <h3>Example B: Applying Rule 2</h3>
-        <p>Find the value of the limit:</p>
         <div class="example">
-          \[ \lim_{x \to 0} \frac{1 - \cos(2x)}{x^2} \]
-          <p>This limit resembles Rule 2. The correct approach for this problem is to use the double-angle identity:</p>
-          \[ 1 - \cos(2x) = 2\sin^2(x) \]
-          <p>Substituting this identity into the limit expression gives:</p>
-          \[ \lim_{x \to 0} \frac{2\sin^2(x)}{x^2} = \lim_{x \to 0} 2 \left( \frac{\sin x}{x} \right)^2 \]
-          <p>Using Rule 1, this simplifies to:</p>
-          \[ 2 \cdot (1)^2 = 2 \]
+          \[ \lim_{x \to 0} \frac{1 - \cos(2x)}{x^2} = 2 \]
         </div>
-    
+
         <h2>3. Limits That Approach a Value Other Than Zero</h2>
-        <p>Sometimes the variable approaches an integer instead of zero. In this case, we use a <strong>change of variable</strong> to transform the limit into a more familiar form.</p>
-    
         <h3>Example C: Change of Variable</h3>
-        <p>Find the value of the limit:</p>
         <div class="example">
-          \[ \lim_{x \to 1} \frac{\sin(\pi(x-1))}{x-1} \]
-          <p>Let \( u = x-1 \). As \(x \to 1\), \(u \to 0\). We can rewrite the limit in terms of \(u\).</p>
-          \[ \lim_{u \to 0} \frac{\sin(\pi u)}{u} \]
-          <p>Now we can use the same technique as in Example A by multiplying the numerator and denominator by \(\pi\).</p>
-          \[ \lim_{u \to 0} \frac{\sin(\pi u)}{u} \cdot \frac{\pi}{\pi} = \lim_{u \to 0} \pi \cdot \frac{\sin(\pi u)}{\pi u} = \pi \cdot 1 = \pi \]
+          \[ \lim_{x \to 1} \frac{\sin(\pi(x-1))}{x-1} = \pi \]
         </div>
-    
+
         <h2>Check Yourself</h2>
         <div class="check">
           <p>Find \(\lim_{x \to 0} \frac{\tan x}{x}\).</p>
           <button class="show-solution-btn" onclick="toggleSolution(this)">Show Solution</button>
           <div class="solution">
-            <p>Rewrite \(\tan x\) as \(\frac{\sin x}{\cos x}\):</p>
-            \[ \lim_{x \to 0} \frac{\sin x / \cos x}{x} = \lim_{x \to 0} \frac{\sin x}{x \cos x} \]
-            <p>Using the properties of limits, this becomes:</p>
-            \[ \lim_{x \to 0} \frac{\sin x}{x} \cdot \lim_{x \to 0} \frac{1}{\cos x} = 1 \cdot \frac{1}{\cos(0)} = 1 \cdot \frac{1}{1} = 1 \]
+            \[ \lim_{x \to 0} \frac{\tan x}{x} = 1 \]
           </div>
         </div>
-    
+
         <div class="check">
           <p>Find \(\lim_{x \to 0} \frac{1 - \cos(3x)}{x^2}\).</p>
           <button class="show-solution-btn" onclick="toggleSolution(this)">Show Solution</button>
           <div class="solution">
-            <p>Use the half-angle identity \(1 - \cos(2\theta) = 2\sin^2(\theta)\). Here, \(2\theta = 3x\), so \(\theta = \frac{3x}{2}\).</p>
-            \[ \lim_{x \to 0} \frac{2\sin^2(\frac{3x}{2})}{x^2} = 2 \lim_{x \to 0} \left( \frac{\sin(\frac{3x}{2})}{x} \right)^2 \]
-            <p>Multiply inside the parenthesis to match the denominator:</p>
-            \[ 2 \lim_{x \to 0} \left( \frac{\sin(\frac{3x}{2})}{x} \cdot \frac{\frac{3}{2}}{\frac{3}{2}} \right)^2 = 2 \lim_{x \to 0} \left( \frac{3}{2} \cdot \frac{\sin(\frac{3x}{2})}{\frac{3x}{2}} \right)^2 \]
-            <p>Using Rule 1, this simplifies to:</p>
-            \[ 2 \left( \frac{3}{2} \cdot 1 \right)^2 = 2 \cdot \frac{9}{4} = \frac{9}{2} \]
+            \[ \lim_{x \to 0} \frac{1 - \cos(3x)}{x^2} = \frac{9}{2} \]
           </div>
         </div>
-    
+
         <div class="nav-buttons">
           <a href="Ch1_Sec1.3_apcalc_txb.html" class="nav-btn">Back ⬅</a>
           <a href="Ch1_Sec1.5_apcalc_txb.html" class="nav-btn">Next ➡</a>
@@ -312,13 +155,8 @@
   <script>
     function toggleSolution(button) {
       const solution = button.nextElementSibling;
-      if (solution.style.display === "none" || solution.style.display === "") {
-        solution.style.display = "block";
-        button.textContent = "Hide Solution";
-      } else {
-        solution.style.display = "none";
-        button.textContent = "Show Solution";
-      }
+      solution.style.display = (solution.style.display === "none" || solution.style.display === "") ? "block" : "none";
+      button.textContent = solution.style.display === "block" ? "Hide Solution" : "Show Solution";
     }
 
     async function loadComponent(url, elementId) {
@@ -333,7 +171,6 @@
       }
     }
 
-    // Fetch header, sidebar, and footer
     loadComponent('textbookheader.html', 'header-placeholder');
     loadComponent('textbooksidebar.html', 'sidebar-placeholder');
     loadComponent('textbookfooter.html', 'footer-placeholder');
