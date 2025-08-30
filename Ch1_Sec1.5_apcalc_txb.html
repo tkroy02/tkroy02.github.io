@@ -219,12 +219,15 @@
       }
     }
 
-    async function loadComponent(url, elementId) {
-      try {
-        const response = await fetch(url);
-        if (!response.ok) throw new Error(`Failed to load ${url}: ${response.status}`);
-        const html = await response.text();
-        document.getElementById(elementId).innerHTML = html;
+    // This is the correct and complete load function.
+        async function loadComponent(url, elementId) {
+            try {
+                const response = await fetch(url);
+                if (!response.ok) {
+                    throw new Error(`Failed to load ${url}: ${response.status}`);
+                }
+                const html = await response.text();
+                document.getElementById(elementId).innerHTML = html;
 
                 // Set the title only after the header is loaded
                 if (elementId === 'header-placeholder') {
@@ -250,7 +253,6 @@
   </script>
 </body>
 </html>
-
 
 
 
