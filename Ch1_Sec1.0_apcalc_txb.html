@@ -301,12 +301,15 @@
 
                 // Set the title only after the header is loaded
                 if (elementId === 'header-placeholder') {
-                    const titleElement = document.getElementById('Introduction to AP Calculus');
-                    if (titleElement) {
-                        // **This is the line you will change for each page**
-                        titleElement.textContent = 'Section 1.0 – Introduction to AP Calculus'; 
-                    }
-                }
+    const titleElement = document.getElementById('section-title');
+    if (titleElement) {
+        // Change both the visible header and the browser tab title
+        const pageTitle = 'Section 1.0 – Introduction to AP Calculus';
+        titleElement.textContent = pageTitle;
+        document.title = pageTitle;
+    }
+}
+
                 
             } catch (err) {
                 console.error(err);
@@ -321,4 +324,3 @@
     </script>
 </body>
 </html>
-
