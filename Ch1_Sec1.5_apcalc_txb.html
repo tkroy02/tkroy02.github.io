@@ -225,6 +225,19 @@
         if (!response.ok) throw new Error(`Failed to load ${url}: ${response.status}`);
         const html = await response.text();
         document.getElementById(elementId).innerHTML = html;
+
+                // Set the title only after the header is loaded
+                if (elementId === 'header-placeholder') {
+    const titleElement = document.getElementById('section-title');
+    if (titleElement) {
+        // Change both the visible header and the browser tab title
+        const pageTitle = 'Section 1.0 – Introduction to AP Calculus';
+        titleElement.textContent = pageTitle;
+        document.title = pageTitle;
+    }
+
+        
+      
       } catch (err) {
         console.error(err);
         document.getElementById(elementId).innerHTML = `<p style="color:red;">Error loading component: ${url}</p>`;
@@ -237,4 +250,5 @@
   </script>
 </body>
 </html>
+
 
