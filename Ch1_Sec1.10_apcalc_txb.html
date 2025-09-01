@@ -304,34 +304,34 @@
       }
     }
 
-    async function loadComponent(url, elementId) {
+    async function loadComponent(url, elementId, pageTitle = null) {
       try {
-        const response = await fetch(url);
+        const response = await fetch(url, { cache: "no-store" });
         if (!response.ok) throw new Error(`Failed to load ${url}: ${response.status}`);
         const html = await response.text();
-        document.getElementById(elementId).innerHTML = html;
+        const container = document.getElementById(elementId);
+        if (!container) return;
+        container.innerHTML = html;
 
-// Set the title only after the header is loaded
-        if (elementId === 'header-placeholder') {
-            const titleElement = document.getElementById('section-title');
-            if (titleElement) {
-                const pageTitle = 'Section 1.10 – Infinite Limits';
-                titleElement.textContent = pageTitle;
-                document.title = pageTitle;
-            }
+        // Update document title if requested
+        if (pageTitle && elementId === 'header-placeholder') {
+          const titleEl = container.querySelector('#section-title') || container.querySelector('h1');
+          if (titleEl) titleEl.textContent = pageTitle;
+          document.title = pageTitle;
         }
-        
       } catch (err) {
         console.error(err);
-        document.getElementById(elementId).innerHTML = `<p style="color:red;">Error loading component: ${url}</p>`;
+        const el = document.getElementById(elementId);
+        if (el) el.innerHTML = `<p style="color:red;">Error loading component: ${url}</p>`;
       }
     }
 
-    // Fetch header, sidebar, and footer
-    loadComponent('textbookheader.html', 'header-placeholder');
-    loadComponent('textbooksidebar.html', 'sidebar-placeholder');
-    loadComponent('textbookfooter.html', 'footer-placeholder');
+    document.addEventListener('DOMContentLoaded', () => {
+      loadComponent('textbookheader.html', 'header-placeholder', 'Section 1.10 – Infinite Limits');
+      loadComponent('textbooksidebar.html', 'sidebar-placeholder');
+      loadComponent('textbookfooter.html', 'footer-placeholder');
+    });
   </script>
 </body>
-
 </html>
+
