@@ -375,9 +375,9 @@
     }
 
     document.addEventListener('DOMContentLoaded', () => {
-      loadComponent('textbookheader.html', 'header-placeholder', 'Section 1.6 – Limit and Rationalization');
-      loadComponent('textbooksidebar.html', 'sidebar-placeholder');
-      loadComponent('textbookfooter.html', 'footer-placeholder');
+      await loadComponent('textbookheader.html', 'header-placeholder', 'Section 1.6 – Limit and Rationalization');
+      await loadComponent('textbooksidebar.html', 'sidebar-placeholder');
+      await loadComponent('textbookfooter.html', 'footer-placeholder');
 
   // Highlight active sidebar link
     const currentUrl = window.location.pathname.split('/').pop().split('?')[0];
@@ -400,5 +400,6 @@
   </script>
 </body>
 </html>
+
 
 
