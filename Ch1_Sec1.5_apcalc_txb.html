@@ -207,7 +207,7 @@
   </div>
   <div id="footer-placeholder"></div>
 
-  <script>
+<script>
     function toggleSolution(button) {
       const solution = button.nextElementSibling;
       if (solution.style.display === "none" || solution.style.display === "") {
@@ -219,8 +219,7 @@
       }
     }
 
-    // This is the correct and complete load function.
-     async function loadComponent(url, elementId, pageTitle = null) {
+    async function loadComponent(url, elementId, pageTitle = null) {
       try {
         const response = await fetch(url, { cache: "no-store" });
         if (!response.ok) throw new Error(`Failed to load ${url}: ${response.status}`);
@@ -228,31 +227,25 @@
         const container = document.getElementById(elementId);
         if (!container) return;
         container.innerHTML = html;
-        
+
         // Update document title if requested
         if (pageTitle && elementId === 'header-placeholder') {
           const titleEl = container.querySelector('#section-title') || container.querySelector('h1');
           if (titleEl) titleEl.textContent = pageTitle;
           document.title = pageTitle;
         }
-
       } catch (err) {
         console.error(err);
         const el = document.getElementById(elementId);
         if (el) el.innerHTML = `<p style="color:red;">Error loading component: ${url}</p>`;
       }
     }
-   
 
-    loadComponent('textbookheader.html', 'header-placeholder');
-    loadComponent('textbooksidebar.html', 'sidebar-placeholder');
-    loadComponent('textbookfooter.html', 'footer-placeholder');
+    document.addEventListener('DOMContentLoaded', () => {
+      loadComponent('textbookheader.html', 'header-placeholder', 'Section 1.2 – Evaluating Limits');
+      loadComponent('textbooksidebar.html', 'sidebar-placeholder');
+      loadComponent('textbookfooter.html', 'footer-placeholder');
+    });
   </script>
 </body>
 </html>
-
-
-
-
-
-
