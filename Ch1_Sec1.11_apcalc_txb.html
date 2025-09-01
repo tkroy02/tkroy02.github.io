@@ -210,11 +210,19 @@
       }
     }
 
-    document.addEventListener('DOMContentLoaded', () => {
-      loadComponent('textbookheader.html', 'header-placeholder', 'Section 1.11 – Squeeze Theorem');
-      loadComponent('textbooksidebar.html', 'sidebar-placeholder');
-      loadComponent('textbookfooter.html', 'footer-placeholder');
+    document.addEventListener('DOMContentLoaded', async () => {
+    await loadComponent('textbooksidebar.html', 'sidebar-placeholder');
+
+    // Highlight active sidebar link
+    const currentUrl = window.location.pathname.split('/').pop().split('?')[0];
+    const links = document.querySelectorAll('#sidebar-placeholder a');
+    links.forEach(link => {
+        const linkUrl = link.getAttribute('href').split('?')[0];
+        if (linkUrl === currentUrl) {
+            link.classList.add('active');
+        }
     });
+});
   </script>
 </body>
 </html>
