@@ -277,48 +277,42 @@
 
     <div id="footer-placeholder"></div>
 
-    <script>
-        function toggleSolution(btn) {
-            const solution = btn.nextElementSibling;
-            if (solution.style.display === "block") {
-                solution.style.display = "none";
-                btn.textContent = "Show Solution";
-            } else {
-                solution.style.display = "block";
-                btn.textContent = "Hide Solution";
-            }
-        }
-        
-        // This is the correct and complete load function.
-        async function loadComponent(url, elementId) {
-            try {
-                const response = await fetch(url);
-                if (!response.ok) {
-                    throw new Error(`Failed to load ${url}: ${response.status}`);
-                }
-                const html = await response.text();
-                document.getElementById(elementId).innerHTML = html;
-
-                // Set the title only after the header is loaded
-                if (elementId === 'header-placeholder') {
-    const titleElement = document.getElementById('section-title');
-    if (titleElement) {
-        // Change both the visible header and the browser tab title
-        const pageTitle = 'Section 1.0 – Introduction to AP Calculus';
-        titleElement.textContent = pageTitle;
-        document.title = pageTitle;
+ <script>
+    function toggleSolution(button) {
+      const solution = button.nextElementSibling;
+      if (solution.style.display === "none" || solution.style.display === "") {
+        solution.style.display = "block";
+        button.textContent = "Hide Solution";
+      } else {
+        solution.style.display = "none";
+        button.textContent = "Show Solution";
+      }
     }
-}
 
-                
-            } catch (err) {
-                console.error(err);
-                document.getElementById(elementId).innerHTML = `<p style="color:red;">Error loading component: ${url}</p>`;
-            }
+    async function loadComponent(url, elementId, pageTitle = null) {
+      try {
+        const response = await fetch(url, { cache: "no-store" });
+        if (!response.ok) throw new Error(`Failed to load ${url}: ${response.status}`);
+        const html = await response.text();
+        const container = document.getElementById(elementId);
+        if (!container) return;
+        container.innerHTML = html;
+
+        // Update document title if requested
+        if (pageTitle && elementId === 'header-placeholder') {
+          const titleEl = container.querySelector('#section-title') || container.querySelector('h1');
+          if (titleEl) titleEl.textContent = pageTitle;
+          document.title = pageTitle;
         }
+      } catch (err) {
+        console.error(err);
+        const el = document.getElementById(elementId);
+        if (el) el.innerHTML = `<p style="color:red;">Error loading component: ${url}</p>`;
+      }
+    }
         
     document.addEventListener('DOMContentLoaded', async () => {
-    await loadComponent('textbookheader.html', 'header-placeholder',);
+    await loadComponent('textbookheader.html', 'header-placeholder', 'Section 1.0 – Introduction to AP Calculus');
     await loadComponent('textbooksidebar.html', 'sidebar-placeholder');
     await loadComponent('textbookfooter.html', 'footer-placeholder');
 
@@ -337,5 +331,6 @@
   </script>
 </body>
 </html>
+
 
 
