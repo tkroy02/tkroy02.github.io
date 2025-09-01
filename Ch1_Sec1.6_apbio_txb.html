@@ -474,46 +474,34 @@
         <p>Contact: info@tklesson.com</p>
     </footer>
 
-  <script>
-    function toggleSolution(button) {
-      const solution = button.nextElementSibling;
-      if (solution.style.display === "none" || solution.style.display === "") {
-        solution.style.display = "block";
-        button.textContent = "Hide Solution";
-      } else {
-        solution.style.display = "none";
-        button.textContent = "Show Solution";
-      }
-    }
-
-    async function loadComponent(url, elementId, pageTitle = null) {
-      try {
-        const response = await fetch(url, { cache: "no-store" });
-        if (!response.ok) throw new Error(`Failed to load ${url}: ${response.status}`);
-        const html = await response.text();
-        const container = document.getElementById(elementId);
-        if (!container) return;
-        container.innerHTML = html;
-
-        // Update document title if requested
-        if (pageTitle && elementId === 'header-placeholder') {
-          const titleEl = container.querySelector('#section-title') || container.querySelector('h1');
-          if (titleEl) titleEl.textContent = pageTitle;
-          document.title = pageTitle;
+    <script>
+        /**
+         * A hybrid method for handling webpage titles.
+         * Combines a static HTML title with a dynamic JavaScript update,
+         * ensuring consistency between the browser's tab title and the visible title on the page itself.
+         * The loadComponent function is used to dynamically update the title, where the desired page title
+         * is passed as a third argument to the function. Inside loadComponent, if the argument exists
+         * and the component being loaded is the header, it updates the header element's text content
+         * and document.title to the new title, ensuring all title elements are synchronized.
+         * This modular approach allows the main HTML file to specify the title once in the loadComponent call.
+         *
+         * @param {string} componentName - The name of the component being loaded.
+         * @param {string} componentPath - The path to the component's file.
+         * @param {string} pageTitle - The desired title for the page and browser tab.
+         */
+        function loadComponent(componentName, componentPath, pageTitle) {
+            if (componentName === 'header' && pageTitle) {
+                const headerH1 = document.querySelector('header h1');
+                if (headerH1) {
+                    headerH1.textContent = pageTitle;
+                }
+                document.title = pageTitle;
+            }
         }
-      } catch (err) {
-        console.error(err);
-        const el = document.getElementById(elementId);
-        if (el) el.innerHTML = `<p style="color:red;">Error loading component: ${url}</p>`;
-      }
-    }
 
-    document.addEventListener('DOMContentLoaded', () => {
-      loadComponent('textbookheader.html', 'header-placeholder', 'Section 1.6 – Limit and Rationalization');
-      loadComponent('textbooksidebar.html', 'sidebar-placeholder');
-      loadComponent('textbookfooter.html', 'footer-placeholder');
-    });
-  </script>
+        window.addEventListener('load', () => {
+            loadComponent('header', 'path/to/header', 'Section 1.6: Proteins and Nucleic Acids');
+        });
+    </script>
 </body>
 </html>
-
