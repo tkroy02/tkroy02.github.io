@@ -220,31 +220,28 @@
     }
 
     // This is the correct and complete load function.
-     async function loadComponent(url, elementId) {
-    try {
-        const response = await fetch(url);
-        if (!response.ok) {
-            throw new Error(`Failed to load ${url}: ${response.status}`);
-        }
+     async function loadComponent(url, elementId, pageTitle = null) {
+      try {
+        const response = await fetch(url, { cache: "no-store" });
+        if (!response.ok) throw new Error(`Failed to load ${url}: ${response.status}`);
         const html = await response.text();
-        document.getElementById(elementId).innerHTML = html;
-
-        // Set the title only after the header is loaded
-        if (elementId === 'header-placeholder') {
-            const titleElement = document.getElementById('section-title');
-            if (titleElement) {
-                const pageTitle = 'Section 1.5 – Classwork';
-                titleElement.textContent = pageTitle;
-                document.title = pageTitle;
-            }
+        const container = document.getElementById(elementId);
+        if (!container) return;
+        container.innerHTML = html;
+        
+        // Update document title if requested
+        if (pageTitle && elementId === 'header-placeholder') {
+          const titleEl = container.querySelector('#section-title') || container.querySelector('h1');
+          if (titleEl) titleEl.textContent = pageTitle;
+          document.title = pageTitle;
         }
 
-
-    } catch (err) {
+      } catch (err) {
         console.error(err);
-        document.getElementById(elementId).innerHTML = `<p style="color:red;">Error loading component: ${url}</p>`;
+        const el = document.getElementById(elementId);
+        if (el) el.innerHTML = `<p style="color:red;">Error loading component: ${url}</p>`;
+      }
     }
-}
    
 
     loadComponent('textbookheader.html', 'header-placeholder');
@@ -253,6 +250,7 @@
   </script>
 </body>
 </html>
+
 
 
 
